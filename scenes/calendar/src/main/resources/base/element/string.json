@@ -1,0 +1,20 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "module description"
+    },
+    {
+      "name": "EntryAbility_desc",
+      "value": "description"
+    },
+    {
+      "name": "schedule_lc_desc",
+      "value": "china calendar"
+    },
+    {
+      "name": "agcit_huawei_dailyschedule",
+      "value": "1.0.1"
+    }
+  ]
+}

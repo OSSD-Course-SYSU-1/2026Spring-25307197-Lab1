@@ -1,0 +1,84 @@
+{
+  "string": [
+    {
+      "name": "page_show",
+      "value": "page from package"
+    },
+    {
+      "name": "todo_section_expire",
+      "value": "expired"
+    },
+    {
+      "name": "todo_section_today",
+      "value": "today"
+    },
+    {
+      "name": "todo_section_tomorrow",
+      "value": "tomorrow"
+    },
+    {
+      "name": "todo_section_all",
+      "value": "all"
+    },
+    {
+      "name": "todo_section_complete",
+      "value": "completed"
+    },
+    {
+      "name": "unfinished_task",
+      "value": "unfinished_task"
+    },
+    {
+      "name": "finished_task",
+      "value": "finished_task"
+    },
+    {
+      "name": "monday",
+      "value": "monday"
+    },
+    {
+      "name": "tuesday",
+      "value": "tuesday"
+    },
+    {
+      "name": "wednesday",
+      "value": "wednesday"
+    },
+    {
+      "name": "thursday",
+      "value": "friday"
+    },
+    {
+      "name": "friday",
+      "value": "friday"
+    },
+    {
+      "name": "saturday",
+      "value": "saturday"
+    },
+    {
+      "name": "sunday",
+      "value": "sunday"
+    },
+    {
+      "name": "location_permission",
+      "value": "location_permission"
+    },
+    {
+      "name": "approximately_location_permission",
+      "value": "approximately_location_permission"
+    },
+    {
+      "name": "text_confirm",
+      "value": "confirm"
+    },
+    {
+      "name": "text_cancel",
+      "value": "cancel"
+    },
+    {
+      "name": "agcit_huawei_dailyschedule",
+      "value": "1.0.1"
+    }
+  ]
+}

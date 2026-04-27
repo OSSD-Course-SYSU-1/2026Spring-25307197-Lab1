@@ -1,0 +1,56 @@
+{
+  "color": [
+    {
+      "name": "start_window_background",
+      "value": "#FFFFFF"
+    },
+    {
+      "name": "weekday_title",
+      "value": "#666666"
+    },
+    {
+      "name": "card_red",
+      "value": "#e74127"
+    },
+    {
+      "name": "card_orange",
+      "value": "#f7a023"
+    },
+    {
+      "name": "card_green",
+      "value": "#66bb5e"
+    },
+    {
+      "name": "card_gray",
+      "value": "#919294"
+    },
+    {
+      "name": "button_background",
+      "value": "#007DFF"
+    },
+    {
+      "name": "window_background",
+      "value": "#F1F3F5"
+    },
+    {
+      "name": "orange",
+      "value": "#F76045"
+    },
+    {
+      "name": "black",
+      "value": "#000000"
+    },
+    {
+      "name": "purple",
+      "value": "#7A6FEB"
+    },
+    {
+      "name": "gray",
+      "value": "#808080"
+    },
+    {
+      "name": "sys_default_blue",
+      "value": "#3093FA"
+    }
+  ]
+}

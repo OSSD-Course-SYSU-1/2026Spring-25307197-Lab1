@@ -1,0 +1,136 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "模块描述"
+    },
+    {
+      "name": "EntryAbility_desc",
+      "value": "描述"
+    },
+    {
+      "name": "EntryAbility_label",
+      "value": "日历模块"
+    },
+    {
+      "name": "title_calendar",
+      "value": "日历"
+    },
+    {
+      "name": "title_month",
+      "value": "月"
+    },
+    {
+      "name": "title_today",
+      "value": "待办"
+    },
+    {
+      "name": "title_week",
+      "value": "周"
+    },
+    {
+      "name": "title_day",
+      "value": "日"
+    },
+    {
+      "name": "text_monday",
+      "value": "一"
+    },
+    {
+      "name": "text_tuesday",
+      "value": "二"
+    },
+    {
+      "name": "text_wednesday",
+      "value": "三"
+    },
+    {
+      "name": "text_thursday",
+      "value": "四"
+    },
+    {
+      "name": "text_friday",
+      "value": "五"
+    },
+    {
+      "name": "text_saturday",
+      "value": "六"
+    },
+    {
+      "name": "text_sunday",
+      "value": "日"
+    },
+    {
+      "name": "text_monday_week",
+      "value": "星期一"
+    },
+    {
+      "name": "text_tuesday_week",
+      "value": "星期二"
+    },
+    {
+      "name": "text_wednesday_week",
+      "value": "星期三"
+    },
+    {
+      "name": "text_thursday_week",
+      "value": "星期四"
+    },
+    {
+      "name": "text_friday_week",
+      "value": "星期五"
+    },
+    {
+      "name": "text_saturday_week",
+      "value": "星期六"
+    },
+    {
+      "name": "text_sunday_week",
+      "value": "星期日"
+    },
+    {
+      "name": "schedule_lc_desc",
+      "value": "中国日历"
+    },
+    {
+      "name": "monday",
+      "value": "一"
+    },
+    {
+      "name": "tuesday",
+      "value": "二"
+    },
+    {
+      "name": "wednesday",
+      "value": "三"
+    },
+    {
+      "name": "thursday",
+      "value": "四"
+    },
+    {
+      "name": "friday",
+      "value": "五"
+    },
+    {
+      "name": "saturday",
+      "value": "六"
+    },
+    {
+      "name": "sunday",
+      "value": "日"
+    },
+    {
+      "name": "unfinished_task",
+      "value": "待处理"
+    },
+    {
+      "name": "finished_task",
+      "value": "已处理"
+    },
+    {
+      "name": "agcit_huawei_dailyschedule",
+      "value": "1.0.1"
+    }
+  ]
+}

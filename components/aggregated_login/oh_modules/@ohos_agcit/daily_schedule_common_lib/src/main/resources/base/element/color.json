@@ -1,0 +1,21 @@
+{
+  "color": [
+    {
+      "name": "color_gray_background",
+      "value": "#F1F3F5"
+    },
+    {
+      "name": "color_green_common",
+      "value": "#64BB5C"
+    },
+    {
+      "name": "color_gray_light",
+      "value": "#e8e8e7"
+    },
+    {
+      "name": "color_gray_deeper",
+      "value": "#616263"
+    }
+    
+  ]
+}

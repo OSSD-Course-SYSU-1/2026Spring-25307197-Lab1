@@ -1,0 +1,20 @@
+{
+  "string": [
+    {
+      "name": "page_show",
+      "value": "展示"
+    },
+    {
+      "name": "page_todo_title",
+      "value": "首页"
+    },
+    {
+      "name": "dialog_delete",
+      "value": "删除"
+    },
+    {
+      "name": "agcit_huawei_dailyschedule",
+      "value": "1.0.1"
+    }
+  ]
+}

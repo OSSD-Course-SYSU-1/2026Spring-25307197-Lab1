@@ -1,0 +1,44 @@
+{
+  "routerMap": [
+    {
+      "name": "MinePage",
+      "pageSourceFile": "src/main/ets/mine/MinePage.ets",
+      "buildFunction": "MinePageBuilder"
+    },
+    {
+      "name": "AboutUs",
+      "pageSourceFile": "src/main/ets/mine/AboutUs.ets",
+      "buildFunction": "AboutUsBuilder"
+    },
+    {
+      "name": "FeedBackChoose",
+      "pageSourceFile": "src/main/ets/mine/FeedBackChoose.ets",
+      "buildFunction": "FeedBackChooseBuilder"
+    },
+    {
+      "name": "FeedBackPage",
+      "pageSourceFile": "src/main/ets/mine/FeedBackPage.ets",
+      "buildFunction": "FeedBackPageBuilder"
+    },
+    {
+      "name": "FeedbackRecordPage",
+      "pageSourceFile": "src/main/ets/mine/FeedbackRecordPage.ets",
+      "buildFunction": "FeedbackRecordPageBuilder"
+    },
+    {
+      "name": "PrivacyAgreement",
+      "pageSourceFile": "src/main/ets/mine/PrivacyAgreement.ets",
+      "buildFunction": "PrivacyAgreementBuilder"
+    },
+    {
+      "name": "PrivacySetting",
+      "pageSourceFile": "src/main/ets/mine/PrivacySetting.ets",
+      "buildFunction": "PrivacySettingBuilder"
+    },
+    {
+      "name": "Setting",
+      "pageSourceFile": "src/main/ets/mine/Setting.ets",
+      "buildFunction": "SettingBuilder"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "name": "phone",
+  "version": "1.0.0",
+  "description": "Please describe the basic information.",
+  "main": "",
+  "author": "",
+  "license": "",
+  "dependencies": {
+    "@ohos_agcit/daily_schedule_common_lib": "file:../../commons/common_lib",
+    "@ohos_agcit/daily_schedule_component_lib": "file:../../commons/component_lib",
+    "@ohos_agcit/daily_schedule_todo": "file:../../scenes/todo",
+    "@ohos_agcit/daily_schedule_calendar": "file:../../scenes/calendar",
+    "@ohos_agcit/daily_schedule_mine": "file:../../scenes/mine",
+    "@ohos_agcit/daily_schedule_utils": "file:../../commons/utils",
+    "check_app_update": "file:../../components/check_app_update",
+    "aggregated_login": "file:../../components/aggregated_login",
+    "feed_back": "file:../../components/feed_back"
+  },
+  "devDependencies": {},
+  "dynamicDependencies": {}
+}

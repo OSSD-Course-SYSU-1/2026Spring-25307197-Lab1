@@ -1,0 +1,136 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "module description"
+    },
+    {
+      "name": "EntryAbility_desc",
+      "value": "description"
+    },
+    {
+      "name": "EntryAbility_label",
+      "value": "EntryAbility_labe"
+    },
+    {
+      "name": "title_calendar",
+      "value": "calendar"
+    },
+    {
+      "name": "title_month",
+      "value": "month"
+    },
+    {
+      "name": "title_today",
+      "value": "today"
+    },
+    {
+      "name": "title_week",
+      "value": "week"
+    },
+    {
+      "name": "title_day",
+      "value": "day"
+    },
+    {
+      "name": "text_monday",
+      "value": "monday"
+    },
+    {
+      "name": "text_tuesday",
+      "value": "tuesday"
+    },
+    {
+      "name": "text_wednesday",
+      "value": "wednesday"
+    },
+    {
+      "name": "text_thursday",
+      "value": "thursday"
+    },
+    {
+      "name": "text_friday",
+      "value": "friday"
+    },
+    {
+      "name": "text_saturday",
+      "value": "saturday"
+    },
+    {
+      "name": "text_sunday",
+      "value": "sunday"
+    },
+    {
+      "name": "text_monday_week",
+      "value": "monday"
+    },
+    {
+      "name": "text_tuesday_week",
+      "value": "tuesday"
+    },
+    {
+      "name": "text_wednesday_week",
+      "value": "wednesday"
+    },
+    {
+      "name": "text_thursday_week",
+      "value": "thursday"
+    },
+    {
+      "name": "text_friday_week",
+      "value": "friday"
+    },
+    {
+      "name": "text_saturday_week",
+      "value": "saturday"
+    },
+    {
+      "name": "text_sunday_week",
+      "value": "sunday"
+    },
+    {
+      "name": "schedule_lc_desc",
+      "value": "china calendar"
+    },
+    {
+      "name": "monday",
+      "value": "monday"
+    },
+    {
+      "name": "tuesday",
+      "value": "tuesday"
+    },
+    {
+      "name": "wednesday",
+      "value": "wednesday"
+    },
+    {
+      "name": "thursday",
+      "value": "thursday"
+    },
+    {
+      "name": "friday",
+      "value": "friday"
+    },
+    {
+      "name": "saturday",
+      "value": "saturday"
+    },
+    {
+      "name": "sunday",
+      "value": "sunday"
+    },
+    {
+      "name": "unfinished_task",
+      "value": "unfinished_task"
+    },
+    {
+      "name": "finished_task",
+      "value": "finished_task"
+    },
+    {
+      "name": "agcit_huawei_dailyschedule",
+      "value": "1.0.1"
+    }
+  ]
+}

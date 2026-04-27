@@ -1,0 +1,9 @@
+{
+  "module": {
+    "name": "calendar",
+    "type": "har",
+    "deviceTypes": [
+      "default"
+    ]
+  }
+}

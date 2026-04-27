@@ -1,0 +1,17 @@
+{
+  "name": "@ohos_agcit/daily_schedule_mine",
+  "version": "1.0.0",
+  "description": "Please describe the basic information.",
+  "main": "Index.ets",
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@ohos_agcit/daily_schedule_common_lib": "file:../../commons/common_lib",
+    "@ohos_agcit/daily_schedule_network": "file:../../commons/network",
+    "@ohos_agcit/daily_schedule_utils": "file:../../commons/utils",
+    "check_app_update": "file:../../components/check_app_update",
+    "@ohos_agcit/daily_schedule_component_lib": "file:../../commons/component_lib",
+    "aggregated_login": "file:../../components/aggregated_login",
+    "feed_back": "file:../../components/feed_back"
+  }
+}

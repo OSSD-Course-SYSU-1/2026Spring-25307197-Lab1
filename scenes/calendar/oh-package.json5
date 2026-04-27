@@ -1,0 +1,16 @@
+{
+  "name": "@ohos_agcit/daily_schedule_calendar",
+  "version": "1.0.0",
+  "description": "Please describe the basic information.",
+  "main": "Index.ets",
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@ohos_agcit/daily_schedule_common_lib": "file:../../commons/common_lib",
+    "@ohos_agcit/daily_schedule_component_lib": "file:../../commons/component_lib",
+    "@ohos_agcit/daily_schedule_utils": "file:../../commons/utils",
+    "@ohos_agcit/daily_schedule_network": "file:../../commons/network",
+    "@ohos_agcit/daily_schedule_todo": "file:../todo",
+    "calendar_component": "file:../../components/calendar_component"
+  }
+}

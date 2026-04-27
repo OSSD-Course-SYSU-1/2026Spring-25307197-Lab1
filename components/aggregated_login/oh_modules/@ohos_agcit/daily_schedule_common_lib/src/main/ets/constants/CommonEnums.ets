@@ -1,0 +1,34 @@
+export enum AppStorageMap {
+  HUAWEI_ACCOUNT = 'huaweiAccount',
+  USER_INFO = 'userInfo',
+}
+
+export enum RouterMap {
+  // 我的-修改个人信息
+  MINE_PROFILE_EDIT = 'ProfileEditPage',
+  // 我的-修改个人信息
+  SELECT_DATE = 'CalenderView',
+
+  EDIT_AGENCY_TASK = 'editAgencyTaskDialog',
+
+  MAIN_ENTRY = 'mainEntry',
+
+  ABOUT = 'about',
+
+  USER_INFO = 'userInfo'
+}
+
+export enum DialogMap {
+  BIND_PHONE_DIALOG = 'BindPhoneDialog',
+  NEW_TODO_TASK = 'newAgencyTaskDialog',
+  TIME_SELECTOR = 'timeSelector',
+  AGENCY_TASK_CALENDER = 'agencyTaskCalender',
+  //编辑待办
+  EDIT_AGENCY_TASK = 'editAgencyTaskDialog',
+  CHECK_IN_HISTORY = 'checkinHistoryDialog',
+  CHECK_IN_SETTINGS = 'checkinSettingsDialog',
+  ACCOUNT_VERIFICATION = 'accountVerificationDialog',
+  NEW_SCHEDULE = 'newScheduleDialog',
+  EDIT_SCHEDULE = 'editScheduleDialog',
+  SCHEDULE_DETAIL = 'scheduleDetailDialog',
+}

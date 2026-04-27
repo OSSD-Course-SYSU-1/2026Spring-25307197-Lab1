@@ -1,0 +1,20 @@
+{
+  "string": [
+    {
+      "name": "app_name",
+      "value": "日程清单"
+    },
+    {
+      "name": "agcit_huawei_dailyschedule",
+      "value": "1.0.1"
+    },
+    {
+      "name": "agcittype_huawei_dailyschedule",
+      "value": "businessTemplate"
+    },
+    {
+      "name": "agcitkit_huawei_dailyschedule",
+      "value": "agcit_huawei_enterprise_recruitment_check_app_update/1.0.2,agcit_huawei_exam_feed_back/1.0.2"
+    }
+  ]
+}

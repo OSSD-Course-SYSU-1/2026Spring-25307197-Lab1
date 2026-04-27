@@ -1,0 +1,46 @@
+{
+  "forms": [
+    {
+      "name": "calendar2x2",
+      "displayName": "$string:calendar_display_name",
+      "description": "$string:calendar_desc",
+      "src": "./ets/servicecard/pages/Calendar2x2Card.ets",
+      "uiSyntax": "arkts",
+      "window": {
+        "designWidth": 720,
+        "autoDesignWidth": true
+      },
+      "colorMode": "auto",
+      "isDynamic": true,
+      "isDefault": true,
+      "updateEnabled": false,
+      "scheduledUpdateTime": "10:30",
+      "updateDuration": 1,
+      "defaultDimension": "2*2",
+      "supportDimensions": [
+        "2*2"
+      ]
+    },
+    {
+      "name": "calendar2x4",
+      "displayName": "$string:calendar_display_name",
+      "description": "$string:calendar_desc",
+      "src": "./ets/servicecard/pages/Calendar4x2Card.ets",
+      "uiSyntax": "arkts",
+      "window": {
+        "designWidth": 720,
+        "autoDesignWidth": true
+      },
+      "colorMode": "auto",
+      "isDynamic": true,
+      "isDefault": false,
+      "updateEnabled": false,
+      "scheduledUpdateTime": "10:30",
+      "updateDuration": 1,
+      "defaultDimension": "2*4",
+      "supportDimensions": [
+        "2*4"
+      ]
+    }
+  ]
+}

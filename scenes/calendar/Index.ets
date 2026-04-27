@@ -1,0 +1,1 @@
+export { CalendarPage } from './src/main/ets/page/CalendarPage';

@@ -1,0 +1,9 @@
+{
+  "module": {
+    "name": "common_lib",
+    "type": "har",
+    "deviceTypes": [
+      "default"
+    ]
+  }
+}

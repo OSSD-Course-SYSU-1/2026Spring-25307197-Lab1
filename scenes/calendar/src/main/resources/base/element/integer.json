@@ -1,0 +1,36 @@
+{
+  "integer": [
+    {
+      "name": "dot_size",
+      "value": 4
+    },
+    {
+      "name": "dot_border_radius",
+      "value": 2
+    },
+    {
+      "name": "extra_info_font_size",
+      "value": 8
+    },
+    {
+      "name": "calendar_title_font_size",
+      "value": 26
+    },
+    {
+      "name": "calendar_title_icon_size",
+      "value": 40
+    },
+    {
+      "name": "month_title_font_size",
+      "value": 18
+    },
+    {
+      "name": "weekday_header_font_size",
+      "value": 14
+    },
+    {
+      "name": "calendar_date_font_size",
+      "value": 16
+    }
+  ]
+}

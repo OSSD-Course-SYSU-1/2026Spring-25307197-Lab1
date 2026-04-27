@@ -1,0 +1,94 @@
+{
+  "app": {
+    "signingConfigs": [],
+    "products": [
+      {
+        "name": "default",
+        "signingConfig": "default",
+        "targetSdkVersion": "5.0.3(15)",
+        "compatibleSdkVersion": "5.0.3(15)",
+        "runtimeOS": "HarmonyOS",
+        "buildOption": {
+          "strictMode": {
+            "caseSensitiveCheck": true,
+            "useNormalizedOHMUrl": true
+          }
+        }
+      }
+    ],
+    "buildModeSet": [
+      {
+        "name": "debug"
+      },
+      {
+        "name": "release"
+      }
+    ]
+  },
+  "modules": [
+    {
+      "name": "common_lib",
+      "srcPath": "./commons/common_lib",
+      "targets": [
+        {
+          "name": "default",
+          "applyToProducts": [
+            "default"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "todo",
+      "srcPath": "./scenes/todo"
+    },
+    {
+      "name": "check_app_update",
+      "srcPath": "./components/check_app_update"
+    },
+    {
+      "name": "feed_back",
+      "srcPath": "./components/feed_back"
+    },
+    {
+      "name": "aggregated_login",
+      "srcPath": "./components/aggregated_login"
+    },
+    {
+      "name": "network",
+      "srcPath": "./commons/network"
+    },
+    {
+      "name": "utils",
+      "srcPath": "./commons/utils"
+    },
+    {
+      "name": "calendar",
+      "srcPath": "./scenes/calendar"
+    },
+    {
+      "name": "mine",
+      "srcPath": "./scenes/mine"
+    },
+    {
+      "name": "component_lib",
+      "srcPath": "./commons/component_lib"
+    },
+    {
+      "name": "calendar_component",
+      "srcPath": "./components/calendar_component"
+    },
+    {
+      "name": "phone",
+      "srcPath": "./products/phone",
+      "targets": [
+        {
+          "name": "default",
+          "applyToProducts": [
+            "default"
+          ]
+        }
+      ]
+    }
+  ]
+}

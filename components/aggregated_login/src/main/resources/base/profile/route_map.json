@@ -1,0 +1,39 @@
+{
+  "routerMap": [
+    {
+      "name": "AggregatedLoginPage",
+      "pageSourceFile": "src/main/ets/views/AggregatedLoginPage.ets",
+      "buildFunction": "AggregatedLoginPageBuilder"
+    },
+    {
+      "name": "OtherLoginPage",
+      "pageSourceFile": "src/main/ets/components/OtherLoginPage.ets",
+      "buildFunction": "OtherLoginPageBuilder"
+    },
+    {
+      "name": "ProtocolWebView",
+      "pageSourceFile": "src/main/ets/views/ProtocolWebView.ets",
+      "buildFunction": "ProtocolWebViewBuilder"
+    },
+    {
+      "name": "AggregatedLogin",
+      "pageSourceFile": "src/main/ets/components/AggregatedLogin.ets",
+      "buildFunction": "AggregatedLoginBuilder"
+    },
+    {
+      "name": "QuickLoginPage",
+      "pageSourceFile": "src/main/ets/views/QuickLoginPage.ets",
+      "buildFunction": "QuickLoginPageBuilder"
+    },
+    {
+      "name": "LogOutDialog",
+      "pageSourceFile": "src/main/ets/views/LogOutDialog.ets",
+      "buildFunction": "LogOutDialogBuilder"
+    },
+    {
+      "name": "UserInfoPage",
+      "pageSourceFile": "src/main/ets/views/UserInfoPage.ets",
+      "buildFunction": "UserInfoBuilder"
+    }
+  ]
+}
