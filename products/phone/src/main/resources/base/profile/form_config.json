@@ -41,6 +41,28 @@
       "supportDimensions": [
         "2*4"
       ]
+    },
+    {
+      "name": "dynamicIcon",
+      "displayName": "$string:dynamic_icon_display_name",
+      "description": "$string:dynamic_icon_desc",
+      "src": "./ets/servicecard/pages/DynamicIconCard.ets",
+      "uiSyntax": "arkts",
+      "window": {
+        "designWidth": 720,
+        "autoDesignWidth": true
+      },
+      "colorMode": "auto",
+      "isDynamic": true,
+      "isDefault": false,
+      "updateEnabled": true,
+      "scheduledUpdateTime": "00:00",
+      "updateDuration": 1,
+      "defaultDimension": "1*1",
+      "supportDimensions": [
+        "1*1",
+        "2*2"
+      ]
     }
   ]
 }

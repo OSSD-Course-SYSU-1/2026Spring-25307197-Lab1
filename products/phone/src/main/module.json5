@@ -58,6 +58,19 @@
             "resource": "$profile:form_config"
           }
         ]
+      },
+      {
+        "name": "DynamicIconFormAbility",
+        "srcEntry": "./ets/dynamiciconformability/DynamicIconFormAbility.ets",
+        "label": "$string:DynamicIconFormAbility_label",
+        "description": "$string:DynamicIconFormAbility_desc",
+        "type": "form",
+        "metadata": [
+          {
+            "name": "ohos.extension.form",
+            "resource": "$profile:form_config"
+          }
+        ]
       }
     ],
     "metadata": [

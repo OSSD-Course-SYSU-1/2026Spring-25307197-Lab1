@@ -95,6 +95,22 @@
     {
       "name": "agcit_huawei_dailyschedule",
       "value": "1.0.1"
+    },
+    {
+      "name": "DynamicIconFormAbility_label",
+      "value": "动态图标"
+    },
+    {
+      "name": "DynamicIconFormAbility_desc",
+      "value": "动态图标卡片"
+    },
+    {
+      "name": "dynamic_icon_display_name",
+      "value": "动态日历图标"
+    },
+    {
+      "name": "dynamic_icon_desc",
+      "value": "显示当天日期的动态图标"
     }
   ]
 }
