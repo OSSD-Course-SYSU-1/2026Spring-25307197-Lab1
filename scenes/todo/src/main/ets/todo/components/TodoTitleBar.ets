@@ -78,10 +78,31 @@ export struct TodoTitleBar {
         .onClick(() => {
           this.onSort()
         })
+
+        Divider().strokeWidth('1px').width('80%').margin({ left: 30 })
+
+        // 清除所有待办（用于测试空状态功能）
+        Row() {
+          Image($r('sys.symbol.trash'))
+            .height(26)
+            .width(26)
+            .fillColor($r('sys.color.font_primary'))
+          Text('清除所有待办')
+            .fontSize($r('sys.float.Body_M'))
+            .fontWeight(FontWeight.Medium)
+            .fontColor($r('sys.color.warning'))
+            .margin({ left: 10 })
+        }
+        .width('100%')
+        .onClick(() => {
+          // 清空所有待办数据
+          this.dataManager.allTasks = []
+          this.dataManager.onAllTasksChange()
+        })
       }
       .justifyContent(FlexAlign.SpaceBetween)
       .padding(10)
-      .height(100)
+      .height(150)
       .width(224)
     }
   }

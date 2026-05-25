@@ -7,6 +7,7 @@ import { AddTodoVM, UpdateTodoPlanTimeVM } from '../mock/TodoInfoVM';
 import { TodoSectionList } from './components/TodoSectionList';
 import { StatusFilterEnum } from '../enum/FilterEnum';
 import { AppStorageV2 } from '@kit.ArkUI';
+import { EmptyStateComponent } from '../emptystate/EmptyStateComponent';
 
 @ComponentV2
 export struct TodoPage {
@@ -22,6 +23,9 @@ export struct TodoPage {
 
   aboutToAppear(): void {
     this.restoreData()
+    // 调试日志：检查空状态功能是否工作
+    console.info('[TodoPage] aboutToAppear - allTasks.length:', this.dataManager.allTasks.length)
+    console.info('[TodoPage] 是否显示空状态:', this.dataManager.allTasks.length === 0)
     // this.dataManager.addTask(new TodoItem('2000', '思考人生', new Date('2025-10-11T08:00:00'), 0, 0, 0, false))
     // this.dataManager.addTask(new TodoItem('2001', '起床', new Date('2025-10-11T08:08:00'), 0, 0, 0, false))
     // this.dataManager.addTask(new TodoItem('2002', '吃饭', new Date('2025-10-11T08:09:00'), 0, 0, 1, false))
@@ -99,13 +103,9 @@ export struct TodoPage {
             ]
           })
         } else {
+          // 使用新的空状态组件（支持趣味文案和自定义）
           Column() {
-            Column() {
-              Image($r('app.media.todo_bg'))
-                .width(100)
-                .height(150)
-              Text('暂无待办事项，请开始添加吧～').fontWeight(FontWeight.Normal).fontColor($r('sys.color.font_tertiary'))
-            }
+            EmptyStateComponent()
           }
           .justifyContent(FlexAlign.Center)
           .height('60%')
