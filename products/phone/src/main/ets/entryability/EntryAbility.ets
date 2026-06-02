@@ -5,7 +5,7 @@ import { BusinessError } from '@kit.BasicServicesKit';
 import { AvoidArea } from '@ohos_agcit/daily_schedule_component_lib';
 import { ThemeController } from '@ohos_agcit/daily_schedule_common_lib';
 import { WindowUtil } from '@ohos_agcit/daily_schedule_utils';
-import { TodoDataManager } from '@ohos_agcit/daily_schedule_todo';
+import { TodoDataManager, TodoPersistenceWrapper } from '@ohos_agcit/daily_schedule_todo';
 
 const DOMAIN = 0x0000;
 
@@ -17,6 +17,9 @@ export default class EntryAbility extends UIAbility {
     this.context.getApplicationContext().setColorMode(ConfigurationConstant.ColorMode.COLOR_MODE_NOT_SET);
     this.themeController.currentColorMode = this.context.config.colorMode;
     hilog.info(DOMAIN, 'testTag', '%{public}s', 'Ability onCreate');
+    
+    // 初始化待办数据持久化
+    TodoPersistenceWrapper.init(this.context);
   }
 
   onDestroy(): void {
@@ -78,6 +81,9 @@ export default class EntryAbility extends UIAbility {
   onBackground(): void {
     // Ability has back to background
     hilog.info(DOMAIN, 'testTag', '%{public}s', 'Ability onBackground');
+    
+    // 应用进入后台时立即保存数据
+    TodoPersistenceWrapper.save();
   }
 
   /**
@@ -91,7 +97,7 @@ export default class EntryAbility extends UIAbility {
     }
   }
 
-  onNewWant(want: Want, _launchParam: AbilityConstant.LaunchParam): void {
+  onNewWant(_want: Want, _launchParam: AbilityConstant.LaunchParam): void {
     this.dataManager.updateAtomicCard()
   }
 }

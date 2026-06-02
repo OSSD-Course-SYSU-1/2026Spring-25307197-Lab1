@@ -11,9 +11,11 @@ import { ThemeController } from '@ohos_agcit/daily_schedule_common_lib';
 import { DataPreferencesUtils } from '../utils/DataPreferencesUtils';
 import { Utils } from '../utils/Utils';
 import { ConfigurationConstant } from '@kit.AbilityKit';
+import { common } from '@kit.AbilityKit';
 import { BreakpointType, GlobalInfoModel } from '@ohos_agcit/daily_schedule_utils';
 import dayjs from 'dayjs';
 import { Lunar } from 'lunar';
+import { DateUtils } from '@ohos_agcit/daily_schedule_common_lib';
 
 @ComponentV2
 export struct CalendarPage {
@@ -29,8 +31,6 @@ export struct CalendarPage {
     AppStorageV2.connect<GlobalInfoModel>(GlobalInfoModel, () => new GlobalInfoModel())!;
   // 分段式按钮控制器
   @Local segmentController: SegmentController = new SegmentController(0, this.onButtonChange.bind(this));
-  // 视图模式按钮
-  @Local viewButtonType: CalendarButtonType = CalendarButtonType.MONTH
   // 所有今日待办
   @Local allTodayTodoItems: TodoItem[] = []
   // 时间线中展示的今日待办
@@ -42,12 +42,17 @@ export struct CalendarPage {
   @Local selectedLunarDate: string = ''
   // 待办信息
   @Local todoData: Map<string, TodoItem[]> = new Map()
+  // 黄历宜忌
+  @Local almanacYi: string = ''
+  @Local almanacJi: string = ''
 
   aboutToAppear(): void {
     this.isShowLunar = this.isSettingLunar()
     this.segmentController.updateActiveIndex(1)
     this.refreshAllTodoCard();
     this.refreshTodayTodoData(new Date());
+    DateUtils.initAlmanacCache(getContext(this) as common.UIAbilityContext);
+    this.loadAlmanac(new Date());
   }
 
   /**
@@ -79,7 +84,6 @@ export struct CalendarPage {
 
   /**
    * 监听断点变化
-   * @param index
    */
   @Monitor('globalInfo.currentBreakpoint')
   onCurrentBreakpointChange() {
@@ -91,7 +95,6 @@ export struct CalendarPage {
    * @param index
    */
   onButtonChange(index: number) {
-    console.log(String(index))
     if (this.segmentController.activeIndex === CalendarButtonType.YEAR &&
       this.vm.viewType !== ViewTypeEnum.YEAR) {
       getContext(this).eventHub.emit('viewTypeChange', ViewTypeEnum.YEAR);
@@ -192,6 +195,68 @@ export struct CalendarPage {
   }
 
   @Builder
+  almanacCard() {
+    Column() {
+      // 标题
+      Text('黄历')
+        .fontSize($r('sys.float.Title_S'))
+        .fontColor($r('sys.color.font_primary'))
+        .fontWeight(FontWeight.Medium)
+        .width('100%')
+        .textAlign(TextAlign.Start)
+        .margin({ bottom: 12 })
+
+      if (this.almanacYi || this.almanacJi) {
+        // 宜
+        if (this.almanacYi) {
+          Row() {
+            Text('宜')
+              .fontSize($r('sys.float.Body_M'))
+              .fontColor('#52C41A')
+              .fontWeight(FontWeight.Medium)
+              .width(32)
+            Text(this.almanacYi)
+              .fontSize($r('sys.float.Body_M'))
+              .fontColor($r('sys.color.font_primary'))
+              .layoutWeight(1)
+          }
+          .width('100%')
+          .alignItems(VerticalAlign.Top)
+          .margin({ bottom: 8 })
+        }
+
+        // 忌
+        if (this.almanacJi) {
+          Row() {
+            Text('忌')
+              .fontSize($r('sys.float.Body_M'))
+              .fontColor('#FF4D4F')
+              .fontWeight(FontWeight.Medium)
+              .width(32)
+            Text(this.almanacJi)
+              .fontSize($r('sys.float.Body_M'))
+              .fontColor($r('sys.color.font_primary'))
+              .layoutWeight(1)
+          }
+          .width('100%')
+          .alignItems(VerticalAlign.Top)
+        }
+      } else {
+        // 无数据提示
+        Text('暂无黄历信息')
+          .fontSize($r('sys.float.Body_M'))
+          .fontColor($r('sys.color.font_tertiary'))
+          .width('100%')
+          .textAlign(TextAlign.Center)
+      }
+    }
+    .width('100%')
+    .padding({ left: 20, right: 20, top: 16, bottom: 16 })
+    .backgroundColor($r('sys.color.background_primary'))
+    .borderRadius(12)
+  }
+
+  @Builder
   segmentButton() {
     SegmentButton({
       tabOptions: this.buttons,
@@ -214,6 +279,22 @@ export struct CalendarPage {
     DataPreferencesUtils.getSync(DataPreferencesUtils.LUNAR_SETTING, DataPreferencesUtils.LUNAR_SETTING_ON)
   }
 
+  loadAlmanac(date: Date) {
+    let year = date.getFullYear();
+    let month = date.getMonth();
+    let day = date.getDate();
+    let cachedAlmanac = DateUtils.getCacheAlmanac(year, month, day);
+    if (cachedAlmanac) {
+      this.almanacYi = cachedAlmanac.yi;
+      this.almanacJi = cachedAlmanac.ji;
+    } else {
+      let almanac = DateUtils.getDayAlmanac(year, month, day);
+      DateUtils.saveAlmanac(year, month, day, almanac);
+      this.almanacYi = almanac.yi;
+      this.almanacJi = almanac.ji;
+    }
+  }
+
   build() {
     Column() {
       // 标题
@@ -229,10 +310,10 @@ export struct CalendarPage {
         YearCalendar({
           todoData: this.todoData,
           onClickMonth: (index) => {
-            let newDate = new Date(this.vm.selectDate.year(), index, 1)
             this.vm.selectDate = dayjs(new Date(this.vm.selectDate.year(), index, 1));
-            this.refreshTodayTodoData(newDate)
+            this.refreshTodayTodoData(new Date(this.vm.selectDate.year(), index, 1))
             this.segmentController.updateActiveIndex(1)
+            this.loadAlmanac(new Date(this.vm.selectDate.year(), index, 1))
           }
         })
           .visibility(this.vm.viewType === ViewTypeEnum.YEAR ? Visibility.Visible : Visibility.None)
@@ -246,6 +327,7 @@ export struct CalendarPage {
           todoData: this.todoData,
           onChangeDay: (date: Date, dateModel?: DateModel) => {
             this.refreshTodayTodoData(date, dateModel)
+            this.loadAlmanac(date)
           }
         })
           .visibility(this.vm.viewType !== ViewTypeEnum.YEAR ? Visibility.Visible : Visibility.None)
@@ -304,6 +386,13 @@ export struct CalendarPage {
           ]
         })
           .layoutWeight(1)
+
+        // 黄历卡片
+        Column() {
+          this.almanacCard()
+        }
+        .width('100%')
+        .padding({ left: 16, right: 16, top: 8, bottom: 8 })
       }
 
       // 日程卡片
@@ -366,6 +455,13 @@ export struct CalendarPage {
           }
           .layoutWeight(1)
           .width('100%')
+
+          // 黄历卡片
+          Column() {
+            this.almanacCard()
+          }
+          .width('100%')
+          .padding({ left: 16, right: 16, top: 8, bottom: 8 })
         }
         .layoutWeight(1)
         .transition(TransitionEffect.OPACITY

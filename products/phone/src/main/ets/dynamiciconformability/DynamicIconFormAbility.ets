@@ -25,7 +25,7 @@ export default class DynamicIconFormAbility extends FormExtensionAbility {
     return formBindingData.createFormBindingData(data);
   }
 
-  onCastToNormalForm(formId: string) {
+  onCastToNormalForm(_formId: string) {
     // Called when the form provider is notified that a temporary form is successfully
     // converted to a normal form.
   }
@@ -50,7 +50,7 @@ export default class DynamicIconFormAbility extends FormExtensionAbility {
     return formBindingData.createFormBindingData(data);
   }
 
-  onFormEvent(formId: string, message: string) {
+  onFormEvent(_formId: string, _message: string) {
     // Called when a specified message event defined by the form provider is triggered.
   }
 
@@ -59,7 +59,7 @@ export default class DynamicIconFormAbility extends FormExtensionAbility {
     console.info(`[DynamicIconFormAbility] onRemoveForm: ${formId}`);
   }
 
-  onAcquireFormState(want: Want) {
+  onAcquireFormState(_want: Want) {
     // Called to return a {@link FormState} object.
     return formInfo.FormState.READY;
   }

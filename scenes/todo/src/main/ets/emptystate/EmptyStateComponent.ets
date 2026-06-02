@@ -59,6 +59,12 @@ export struct EmptyStateComponent {
         .fontSize(12)
         .fontColor($r('sys.color.font_tertiary'))
         .textAlign(TextAlign.Center)
+        .onClick(() => {
+          // 点击切换下一个系统文案
+          this.manager.switchToSystemMode();
+          this.currentText = this.manager.switchToNextSystemText();
+          this.isCustomMode = false;
+        })
       
       // 自定义文案按钮
       Text('自定义')
