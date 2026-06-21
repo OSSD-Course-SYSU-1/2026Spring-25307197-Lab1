@@ -1,4 +1,5 @@
-import { TodoCard, TodoItem } from '@ohos_agcit/daily_schedule_component_lib';
+import { TodoCard } from '@ohos_agcit/daily_schedule_component_lib';
+import { TodoItem } from '@ohos_agcit/daily_schedule_common_lib';
 import { PriorityEnum } from '@ohos_agcit/daily_schedule_todo';
 
 export class Utils {

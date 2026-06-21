@@ -4,7 +4,9 @@
     "type": "har",
     "routerMap": "$profile:route_map",
     "deviceTypes": [
-      "default"
+      "default",
+      "tablet",
+      "2in1"
     ],
     "requestPermissions": [
       {

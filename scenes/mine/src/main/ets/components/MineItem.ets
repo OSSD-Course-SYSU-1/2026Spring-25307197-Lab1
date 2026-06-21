@@ -52,7 +52,7 @@ export struct ContactItem {
         .height(24)
         .margin({ left: 12 })
       Text(this.commonService.label)
-        .fontSize('sys.float.Body_L')
+        .fontSize($r('sys.float.Body_L'))
         .fontColor($r('sys.color.font_primary'))
         .margin({ left: 16 })
       Blank()
@@ -94,7 +94,7 @@ export struct ContactItem {
             .width(14)
             .height(14)
           Text('一键拨号')
-            .fontSize('sys.float.Body_L')
+            .fontSize($r('sys.float.Body_L'))
             .fontWeight(FontWeight.Medium)
             .fontColor($r('sys.color.font_on_primary'))
         }

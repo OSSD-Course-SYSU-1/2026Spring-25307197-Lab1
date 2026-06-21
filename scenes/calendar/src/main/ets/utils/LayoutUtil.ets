@@ -13,7 +13,7 @@
  *   limitations under the License.
  */
 
-import { TodoItem } from '@ohos_agcit/daily_schedule_component_lib';
+import { TodoItem } from '@ohos_agcit/daily_schedule_common_lib';
 import { TimeLineConstants } from '../constant/CalendarConstant';
 
 export class LayoutUtil {

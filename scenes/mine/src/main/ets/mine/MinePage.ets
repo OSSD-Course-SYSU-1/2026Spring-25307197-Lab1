@@ -24,7 +24,7 @@ export struct MinePage {
   titleBar() {
     Row() {
       Text('我的')
-        .fontSize(26)
+        .fontSize($r('sys.float.Title_L'))
         .fontWeight(FontWeight.Bold)
         .width('100%')
         .textAlign(TextAlign.Start);

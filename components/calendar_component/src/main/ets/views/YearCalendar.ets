@@ -2,7 +2,7 @@ import { CalendarVM } from '../viewmodel/CalendarVM';
 import { DateModelList, YearData } from '../models/DateModel';
 import { BaseCalendar } from '../views/BaseCalendar';
 import dayjs from 'dayjs';
-import { TodoItem } from '@ohos_agcit/daily_schedule_component_lib';
+import { TodoItem } from '@ohos_agcit/daily_schedule_common_lib';
 import { mediaquery } from '@kit.ArkUI';
 import { display } from '@kit.ArkUI';
 import { MonthWeekDataSource } from '../models/CalendarDataSource';

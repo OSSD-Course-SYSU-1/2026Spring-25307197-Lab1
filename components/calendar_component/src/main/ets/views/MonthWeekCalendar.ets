@@ -4,7 +4,8 @@ import { CalendarHeaderItem, DateModel, DateModelList } from '../models/DateMode
 import { CalendarUtil } from '../utils/CalendarUtil';
 import { ViewTypeEnum } from '../enum/CalendarEnum';
 import { CommonConstants } from '../constants/CommonContants';
-import { PriorityEnum, TodoCard, TodoItem } from '@ohos_agcit/daily_schedule_component_lib';
+import { PriorityEnum, TodoCard } from '@ohos_agcit/daily_schedule_component_lib';
+import { TodoItem } from '@ohos_agcit/daily_schedule_common_lib';
 
 @ComponentV2
 export struct MonthWeekCalendar {

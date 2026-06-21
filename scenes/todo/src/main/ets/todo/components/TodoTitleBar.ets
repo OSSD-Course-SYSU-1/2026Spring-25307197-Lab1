@@ -11,15 +11,23 @@ export struct TodoTitleBar {
   @Local isShowFilterSheet: boolean = false;
   @Param onSort: () => void = () => {
   }
+  // 紧凑模式（极小窗口时精简UI）
+  @Param isCompactMode: boolean = false;
 
   build() {
     Row() {
-      Text($r('app.string.page_todo_title')).fontSize(26).fontWeight(FontWeight.Bolder)
+      // 极小窗口时缩短标题，避免溢出
+      Text(this.isCompactMode ? '待办' : $r('app.string.page_todo_title'))
+        .fontSize(this.isCompactMode ? $r('sys.float.Body_L') : $r('sys.float.Title_L'))
+        .fontWeight(FontWeight.Bolder)
+        .maxLines(1)
+        .textOverflow({ overflow: TextOverflow.Ellipsis })
       Blank()
+      // 筛选按钮（核心功能，始终保留）
       Image($r('app.media.icon_filter'))
-        .height(40)
-        .width(40)
-        .margin({ right: 5 })
+        .height(this.isCompactMode ? 32 : 40)
+        .width(this.isCompactMode ? 32 : 40)
+        .margin({ right: this.isCompactMode ? 2 : 5 })
         .onClick(() => this.isShowFilterSheet = !this.isShowFilterSheet)
         .bindSheet($$this.isShowFilterSheet, filterSelectBuilder({
           onConfirm: () => {
@@ -38,11 +46,14 @@ export struct TodoTitleBar {
           false
         }
         )
-      Image($r('app.media.icon_more')).height(40).width(40)
-        .bindMenu(this.MenuBuilder())
+      // 更多按钮（极小窗口时隐藏，保证核心功能按钮可见）
+      if (!this.isCompactMode) {
+        Image($r('app.media.icon_more')).height(40).width(40)
+          .bindMenu(this.MenuBuilder())
+      }
     }
-    .padding({ 'left': '5%', right: '5%' })
-    .height('7%')
+    .padding({ 'left': this.isCompactMode ? '3%' : '5%', right: this.isCompactMode ? '3%' : '5%' })
+    .height(this.isCompactMode ? '6%' : '7%')
     .width('100%')
   }
 
@@ -65,7 +76,7 @@ export struct TodoTitleBar {
           this.extInfo.isShowFinished = !this.extInfo.isShowFinished
         })
 
-        Divider().strokeWidth('1px').width('80%').margin({ left: 30 })
+        Divider().strokeWidth(1).width('80%').margin({ left: 30 })
 
         Row() {
           Image($r('app.media.icon_sort')).height(26).width(26)
@@ -79,7 +90,26 @@ export struct TodoTitleBar {
           this.onSort()
         })
 
-        Divider().strokeWidth('1px').width('80%').margin({ left: 30 })
+        Divider().strokeWidth(1).width('80%').margin({ left: 30 })
+
+        // 甩出发送功能开关
+        Row() {
+          Image(this.extInfo.isShareDragEnable ? $r('sys.symbol.checkmark_circle_fill') : $r('sys.symbol.circle'))
+            .height(26)
+            .width(26)
+            .fillColor($r('sys.color.font_primary'))
+          Text(this.extInfo.isShareDragEnable ? '甩出发送功能（已启用）' : '甩出发送功能（已禁用）')
+            .fontSize($r('sys.float.Body_M'))
+            .fontWeight(FontWeight.Medium)
+            .margin({ left: 10 })
+            .fontColor(this.extInfo.isShareDragEnable ? '#0000FF' : $r('sys.color.font_primary'))
+        }
+        .width('100%')
+        .onClick(() => {
+          this.extInfo.isShareDragEnable = !this.extInfo.isShareDragEnable
+        })
+
+        Divider().strokeWidth(1).width('80%').margin({ left: 30 })
 
         // 清除所有待办（用于测试空状态功能）
         Row() {
@@ -102,7 +132,7 @@ export struct TodoTitleBar {
       }
       .justifyContent(FlexAlign.SpaceBetween)
       .padding(10)
-      .height(150)
+      .height(200)
       .width(224)
     }
   }

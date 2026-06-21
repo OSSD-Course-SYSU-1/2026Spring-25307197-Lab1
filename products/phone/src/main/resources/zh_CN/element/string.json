@@ -111,6 +111,14 @@
     {
       "name": "dynamic_icon_desc",
       "value": "显示当天日期的动态图标"
+    },
+    {
+      "name": "distributed_datasync_reason",
+      "value": "用于设备间的分布式数据同步"
+    },
+    {
+      "name": "get_distributed_device_info_reason",
+      "value": "用于发现和获取分布式设备信息"
     }
   ]
 }

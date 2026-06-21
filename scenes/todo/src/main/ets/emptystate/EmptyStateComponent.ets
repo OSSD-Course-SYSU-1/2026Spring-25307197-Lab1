@@ -1,6 +1,8 @@
 import { EmptyStateManager } from './EmptyStateManager';
 import { EmptyStateTexts } from './EmptyStateConstants';
 import { EmptyStateConfig } from './EmptyStateModel';
+import { BreakpointType, GlobalInfoModel } from '@ohos_agcit/daily_schedule_utils';
+import { AppStorageV2 } from '@kit.ArkUI';
 
 /**
  * 空状态组件 - 支持趣味文案和自定义功能
@@ -14,6 +16,8 @@ export struct EmptyStateComponent {
   @Local isCustomMode: boolean = false;
   @Local customInputText: string = '';
   @Local showInputSheet: boolean = false;
+  @Local globalInfo: GlobalInfoModel =
+    AppStorageV2.connect<GlobalInfoModel>(GlobalInfoModel, () => new GlobalInfoModel())!;
   
   aboutToAppear(): void {
     // 初始化时获取当前文案
@@ -33,11 +37,11 @@ export struct EmptyStateComponent {
   }
   
   build() {
-    Column({ space: 12 }) {
+    Column({ space: new BreakpointType<number>({ sm: 12, md: 16, lg: 20 }).getValue(this.globalInfo.currentBreakpoint) }) {
       // 空状态图标
       Image($r('app.media.todo_bg'))
-        .width(100)
-        .height(150)
+        .width(new BreakpointType<number>({ sm: 100, md: 140, lg: 180 }).getValue(this.globalInfo.currentBreakpoint))
+        .height(new BreakpointType<number>({ sm: 150, md: 200, lg: 250 }).getValue(this.globalInfo.currentBreakpoint))
       
       // 当前文案（可点击切换）
       Text(this.currentText)
@@ -56,7 +60,7 @@ export struct EmptyStateComponent {
       
       // 点击切换提示
       Text('点击切换')
-        .fontSize(12)
+        .fontSize(new BreakpointType<number>({ sm: 12, md: 14, lg: 16 }).getValue(this.globalInfo.currentBreakpoint))
         .fontColor($r('sys.color.font_tertiary'))
         .textAlign(TextAlign.Center)
         .onClick(() => {
@@ -68,7 +72,7 @@ export struct EmptyStateComponent {
       
       // 自定义文案按钮
       Text('自定义')
-        .fontSize(12)
+        .fontSize(new BreakpointType<number>({ sm: 12, md: 14, lg: 16 }).getValue(this.globalInfo.currentBreakpoint))
         .fontColor($r('sys.color.font_tertiary'))
         .textAlign(TextAlign.Center)
         .onClick(() => {
@@ -78,7 +82,7 @@ export struct EmptyStateComponent {
       // 如果是自定义模式，显示恢复系统文案按钮
       if (this.isCustomMode) {
         Text('系统文案')
-          .fontSize(12)
+          .fontSize(new BreakpointType<number>({ sm: 12, md: 14, lg: 16 }).getValue(this.globalInfo.currentBreakpoint))
           .fontColor($r('sys.color.font_tertiary'))
           .textAlign(TextAlign.Center)
           .onClick(() => {

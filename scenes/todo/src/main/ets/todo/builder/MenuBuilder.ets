@@ -24,7 +24,7 @@ struct AddTodoMenu {
           // 分隔线
           if (index != this.menuItems.length - 1) {
             Blank()
-            Divider().strokeWidth('1px').width('90%').align(Alignment.Start).margin({ top: 15 })
+            Divider().strokeWidth(1).width('90%').align(Alignment.Start).margin({ top: 15 })
           }
         }
         .onClick(() => {

@@ -78,7 +78,7 @@ export struct TodoSectionList {
               }
             })
           }
-        }, (item: SectionParam) => JSON.stringify(item))
+        }, (item: SectionParam, index: number) => 'section_' + index)
       }
       .zIndex(1)
     }

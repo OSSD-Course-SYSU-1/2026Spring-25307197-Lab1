@@ -1,4 +1,4 @@
-import { TodoItem } from '@ohos_agcit/daily_schedule_component_lib';
+import { TodoItem } from '@ohos_agcit/daily_schedule_common_lib';
 import { CardManager, DateUtils, FormatUtil, FormDataClass } from '@ohos_agcit/daily_schedule_common_lib';
 import { BaseResponse } from '@ohos_agcit/daily_schedule_network';
 import { PriorityFilterEnum } from '../enum/FilterEnum';
@@ -165,7 +165,6 @@ export class TodoDataManager {
 
   private refreshTodayTasks(isDescending: boolean, priorityType?: number): TodoItem[] {
     return this.allTasks
-      .filter(item => item.isFinished === false)
       .filter(item => {
         if (priorityType) {
           return item.priorityType === priorityType
@@ -183,7 +182,6 @@ export class TodoDataManager {
 
   private refreshTomorrowTasks(isDescending: boolean, priorityType?: number): TodoItem[] {
     return this.allTasks
-      .filter(item => item.isFinished === false)
       .filter(item => DateUtils.isTomorrow(FormatUtil.formatDate(item.planTime,
         FormatUtil.DATE_YYYY_MM_DD)))
       .filter(item => {
@@ -201,7 +199,6 @@ export class TodoDataManager {
 
   private refreshAllNotCompleteTasks(isDescending: boolean, priorityType?: number): TodoItem[] {
     return this.allTasks
-      .filter(item => item.isFinished === false)
       .filter(item => {
         if (priorityType) {
           return item.priorityType === priorityType
@@ -217,7 +214,6 @@ export class TodoDataManager {
 
   private refreshExpiredTasks(isDescending: boolean, priorityType?: number): TodoItem[] {
     return this.allTasks
-      .filter(item => item.isFinished === false)
       .filter(item => DateUtils.isExpired(FormatUtil.formatDate(item.planTime,
         FormatUtil.DATE_YYYY_MM_DD)))
       .filter(item => {

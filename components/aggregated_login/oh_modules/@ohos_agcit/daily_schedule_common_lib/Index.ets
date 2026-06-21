@@ -26,3 +26,41 @@ export { MainEntryVM } from './src/main/ets/viewmodel/MainEntryVM';
 export { FileUtils } from './src/main/ets/utils/FileUtils';
 
 export { CheckInStatus } from './src/main/ets/constants/CheckInEnums';
+// 设备管理工具
+export {
+  DeviceManagerUtil,
+  DeviceState,
+  DeviceInfo,
+  DeviceDiscoveryCallback,
+  DeviceStateCallback,
+  DiscoveryFilterOptions,
+  deviceManagerUtil
+} from './src/main/ets/utils/DeviceManagerUtil';
+// 待办事项传输工具
+export {
+  TransferUtil,
+  TransferState,
+  TransferResult,
+  TransferCallback,
+  ReceiveCallback,
+  transferUtil
+} from './src/main/ets/utils/TransferUtil';
+// 设备选择对话框
+export { DeviceSelectDialog, DeviceSelectDialogController } from './src/main/ets/components/DeviceSelectDialog';
+// 待办事项数据模型
+export { TodoItem } from './src/main/ets/model/TodoItem';
+// 待办数据接收管理器
+export {
+  TodoDataReceiver,
+  TodoDataFormat,
+  TodoAction,
+  ReceiveResult,
+  SyncDataPacket
+} from './src/main/ets/utils/TodoDataReceiver';
+// 弹窗管理器
+export {
+  ToastManager,
+  ToastQueueItem,
+  showToast,
+  hideCurrentToast
+} from './src/main/ets/utils/ToastManager';

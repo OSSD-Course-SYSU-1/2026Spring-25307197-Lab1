@@ -31,6 +31,8 @@ export class ExtInfo {
   @Trace isShowFinished: boolean = true
   // true降序 false升序
   @Trace isDescending: boolean = true
+  // 甩出发送功能开关（默认启用）
+  @Trace isShareDragEnable: boolean = true
   private static _instance: ExtInfo
 
   static get instance() {

@@ -6,6 +6,6 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "@ohos_agcit/daily_schedule_common_lib": "file:../../commons/common_lib"
+    "@ohos_agcit/daily_schedule_common_lib": "file:../common_lib"
   }
 }

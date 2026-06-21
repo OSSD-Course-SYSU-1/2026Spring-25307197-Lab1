@@ -1,4 +1,4 @@
-import { TodoItem } from '@ohos_agcit/daily_schedule_component_lib';
+import { TodoItem } from '@ohos_agcit/daily_schedule_common_lib';
 
 export interface SheetCallbacks {
   onConfirm: () => void;

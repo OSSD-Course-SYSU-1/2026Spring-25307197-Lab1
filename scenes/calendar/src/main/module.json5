@@ -3,7 +3,9 @@
     "name": "calendar",
     "type": "har",
     "deviceTypes": [
-      "default"
+      "default",
+      "tablet",
+      "2in1"
     ]
   }
 }

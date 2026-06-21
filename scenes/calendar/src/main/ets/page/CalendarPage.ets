@@ -5,14 +5,15 @@ import { CalendarVM, MonthWeekCalendar, ViewTypeEnum, YearCalendar, DateModel } 
 import { LayoutUtil } from '../utils/LayoutUtil';
 import { TimeLineConstants } from '../constant/CalendarConstant';
 import { TodoDataManager, TodoSectionList } from '@ohos_agcit/daily_schedule_todo';
-import { AvoidArea, TodoCard, TodoItem } from '@ohos_agcit/daily_schedule_component_lib';
+import { AvoidArea, TodoCard } from '@ohos_agcit/daily_schedule_component_lib';
+import { TodoItem } from '@ohos_agcit/daily_schedule_common_lib';
 import { AppStorageV2, curves } from '@kit.ArkUI';
 import { ThemeController } from '@ohos_agcit/daily_schedule_common_lib';
 import { DataPreferencesUtils } from '../utils/DataPreferencesUtils';
 import { Utils } from '../utils/Utils';
 import { ConfigurationConstant } from '@kit.AbilityKit';
 import { common } from '@kit.AbilityKit';
-import { BreakpointType, GlobalInfoModel } from '@ohos_agcit/daily_schedule_utils';
+import { BreakpointType, BreakpointTypeEnum, GlobalInfoModel } from '@ohos_agcit/daily_schedule_utils';
 import dayjs from 'dayjs';
 import { Lunar } from 'lunar';
 import { DateUtils } from '@ohos_agcit/daily_schedule_common_lib';
@@ -88,6 +89,14 @@ export struct CalendarPage {
   @Monitor('globalInfo.currentBreakpoint')
   onCurrentBreakpointChange() {
     this.refreshTodayTodoData(this.vm.selectDate.toDate())
+  }
+
+  /**
+   * 判断是否显示分栏布局（平板/PC横屏）
+   */
+  isSplitLayout(): boolean {
+    return this.globalInfo.currentBreakpoint === BreakpointTypeEnum.MD ||
+           this.globalInfo.currentBreakpoint === BreakpointTypeEnum.LG;
   }
   
   /**
@@ -184,7 +193,7 @@ export struct CalendarPage {
   titleBar() {
     Row() {
       Text($r('app.string.title_calendar'))
-        .fontSize(26)
+        .fontSize($r('sys.float.Title_L'))
         .fontWeight(FontWeight.Bold)
         .width('100%')
         .textAlign(TextAlign.Start)
@@ -204,7 +213,7 @@ export struct CalendarPage {
         .fontWeight(FontWeight.Medium)
         .width('100%')
         .textAlign(TextAlign.Start)
-        .margin({ bottom: 12 })
+        .margin({ bottom: new BreakpointType<number>({ sm: 12, md: 16, lg: 18 }).getValue(this.globalInfo.currentBreakpoint) })
 
       if (this.almanacYi || this.almanacJi) {
         // 宜
@@ -214,7 +223,7 @@ export struct CalendarPage {
               .fontSize($r('sys.float.Body_M'))
               .fontColor('#52C41A')
               .fontWeight(FontWeight.Medium)
-              .width(32)
+              .width(new BreakpointType<number>({ sm: 32, md: 40, lg: 48 }).getValue(this.globalInfo.currentBreakpoint))
             Text(this.almanacYi)
               .fontSize($r('sys.float.Body_M'))
               .fontColor($r('sys.color.font_primary'))
@@ -222,7 +231,7 @@ export struct CalendarPage {
           }
           .width('100%')
           .alignItems(VerticalAlign.Top)
-          .margin({ bottom: 8 })
+          .margin({ bottom: new BreakpointType<number>({ sm: 8, md: 12, lg: 14 }).getValue(this.globalInfo.currentBreakpoint) })
         }
 
         // 忌
@@ -232,7 +241,7 @@ export struct CalendarPage {
               .fontSize($r('sys.float.Body_M'))
               .fontColor('#FF4D4F')
               .fontWeight(FontWeight.Medium)
-              .width(32)
+              .width(new BreakpointType<number>({ sm: 32, md: 40, lg: 48 }).getValue(this.globalInfo.currentBreakpoint))
             Text(this.almanacJi)
               .fontSize($r('sys.float.Body_M'))
               .fontColor($r('sys.color.font_primary'))
@@ -251,9 +260,13 @@ export struct CalendarPage {
       }
     }
     .width('100%')
-    .padding({ left: 20, right: 20, top: 16, bottom: 16 })
+    .padding(new BreakpointType<Padding>({
+      sm: { left: 20, right: 20, top: 16, bottom: 16 },
+      md: { left: 24, right: 24, top: 20, bottom: 20 },
+      lg: { left: 28, right: 28, top: 24, bottom: 24 }
+    }).getValue(this.globalInfo.currentBreakpoint))
     .backgroundColor($r('sys.color.background_primary'))
-    .borderRadius(12)
+    .borderRadius(new BreakpointType<number>({ sm: 12, md: 16, lg: 20 }).getValue(this.globalInfo.currentBreakpoint))
   }
 
   @Builder
@@ -295,7 +308,133 @@ export struct CalendarPage {
     }
   }
 
-  build() {
+  /**
+   * 左侧日历面板（分栏布局）
+   */
+  @Builder
+  calendarPanelBuilder() {
+    Column() {
+      // 年视图
+      YearCalendar({
+        todoData: this.todoData,
+        onClickMonth: (index) => {
+          this.vm.selectDate = dayjs(new Date(this.vm.selectDate.year(), index, 1));
+          this.refreshTodayTodoData(new Date(this.vm.selectDate.year(), index, 1))
+          this.segmentController.updateActiveIndex(1)
+          this.loadAlmanac(new Date(this.vm.selectDate.year(), index, 1))
+        }
+      })
+        .visibility(this.vm.viewType === ViewTypeEnum.YEAR ? Visibility.Visible : Visibility.None)
+
+      // 月周视图
+      MonthWeekCalendar({
+        selectedStyle: 'circle',
+        startWeekday: 'sunday',
+        isShowLunar: this.isShowLunar,
+        selectedColor: $r('sys.color.multi_color_04'),
+        todoData: this.todoData,
+        onChangeDay: (date: Date, dateModel?: DateModel) => {
+          this.refreshTodayTodoData(date, dateModel)
+          this.loadAlmanac(date)
+        }
+      })
+        .visibility(this.vm.viewType !== ViewTypeEnum.YEAR ? Visibility.Visible : Visibility.None)
+    }
+    .width('100%')
+    .height('100%')
+    .padding({ left: 16, right: 8, top: 8, bottom: 8 })
+    .justifyContent(FlexAlign.Start)
+  }
+
+  /**
+   * 右侧待办面板（分栏布局）
+   */
+  @Builder
+  todoPanelBuilder() {
+    Column() {
+      // 日期显示区域
+      Row() {
+        Text(this.selectedDate.toLocaleDateString('zh-CN', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+          weekday: 'long'
+        }))
+          .fontSize($r('sys.float.Title_S'))
+          .fontColor($r('sys.color.font_primary'))
+          .fontWeight(FontWeight.Medium)
+          .layoutWeight(1)
+
+        if (this.isShowLunar) {
+          Text(this.selectedLunarDate)
+            .fontSize($r('sys.float.Body_M'))
+            .fontColor($r('sys.color.font_tertiary'))
+            .fontWeight(FontWeight.Regular)
+        }
+      }
+      .width('100%')
+      .padding({ left: 16, right: 16, top: 12, bottom: 12 })
+      .backgroundColor($r('sys.color.background_primary'))
+      .borderRadius(12)
+      .margin({ bottom: 12 })
+
+      // 待办列表
+      TodoSectionList({
+        params: [
+          {
+            label: $r('app.string.title_today'),
+            data: this.allTodayTodoItems,
+            isShow: true,
+          }
+        ]
+      })
+        .layoutWeight(1)
+
+      // 黄历卡片
+      Column() {
+        this.almanacCard()
+      }
+      .width('100%')
+      .margin({ top: 8 })
+    }
+    .width('100%')
+    .height('100%')
+    .padding({ left: 8, right: 16, top: 8, bottom: 8 })
+  }
+
+  /**
+   * 分栏布局（平板/PC横屏）
+   */
+  @Builder
+  splitLayoutBuilder() {
+    Row() {
+      // 左侧：日历面板
+      Column() {
+        this.titleBar()
+        Blank().height(10)
+        this.segmentButton()
+        Blank().height(12)
+        this.calendarPanelBuilder()
+      }
+      .width('45%')
+      .height('100%')
+
+      // 右侧：待办面板
+      Column() {
+        this.todoPanelBuilder()
+      }
+      .layoutWeight(1)
+      .height('100%')
+    }
+    .width('100%')
+    .height('100%')
+  }
+
+  /**
+   * 单列布局（手机）
+   */
+  @Builder
+  singleLayoutBuilder() {
     Column() {
       // 标题
       this.titleBar()
@@ -473,5 +612,21 @@ export struct CalendarPage {
     .padding({ top: px2vp(this.avoidArea.topRectHeight) })
     .backgroundColor($r('sys.color.background_secondary'))
     .justifyContent(FlexAlign.Start)
+  }
+
+  build() {
+    Column() {
+      if (this.isSplitLayout()) {
+        // 平板/PC横屏：分栏布局
+        this.splitLayoutBuilder()
+      } else {
+        // 手机：单列布局
+        this.singleLayoutBuilder()
+      }
+    }
+    .width('100%')
+    .height('100%')
+    .padding({ top: px2vp(this.avoidArea.topRectHeight) })
+    .backgroundColor($r('sys.color.background_secondary'))
   }
 }

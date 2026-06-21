@@ -38,7 +38,7 @@ export struct TimelineBar {
           Blank().width(10)
           Divider()
             .layoutWeight(1)
-            .backgroundColor('#ccc').strokeWidth('1px')
+            .backgroundColor('#ccc').strokeWidth(1)
         }
         .height(37)
         .width('100%')

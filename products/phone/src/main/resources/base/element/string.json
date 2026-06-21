@@ -127,6 +127,14 @@
     {
       "name": "dynamic_icon_desc",
       "value": "显示当天日期的动态图标"
+    },
+    {
+      "name": "distributed_datasync_reason",
+      "value": "用于发现周边分布式设备并获取设备列表/设备状态"
+    },
+    {
+      "name": "get_distributed_device_info_reason",
+      "value": "用于获取分布式设备基础信息（设备名、类型、网络标识等）"
     }
   ]
 }

@@ -3,7 +3,9 @@
     "name": "check_app_update",
     "type": "har",
     "deviceTypes": [
-      "default"
+      "default",
+      "tablet",
+      "2in1"
     ]
   }
 }

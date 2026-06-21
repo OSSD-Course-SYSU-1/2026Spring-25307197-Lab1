@@ -45,7 +45,7 @@ export struct DatePickerComponent {
 
       if (this.isExpand()) {
         Divider()
-          .strokeWidth('1px')
+          .strokeWidth(1)
           .width('95%')
           .color($r('sys.color.comp_divider'))
           .margin({ bottom: '2.5%' });

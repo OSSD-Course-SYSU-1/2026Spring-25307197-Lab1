@@ -1,7 +1,7 @@
 import { DateModel } from '../models/DateModel';
 import { CommonConstants } from '../constants/CommonContants';
 import { CalendarUtil } from '../utils/CalendarUtil';
-import { TodoItem } from '@ohos_agcit/daily_schedule_component_lib';
+import { TodoItem } from '@ohos_agcit/daily_schedule_common_lib';
 
 @ComponentV2
 export struct BaseCalendar {

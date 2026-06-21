@@ -2,7 +2,7 @@ import { SheetCallbacks } from '../../types/Types';
 import { CustomIcon } from '@ohos_agcit/daily_schedule_component_lib';
 import { ButtonSelectComponent } from '../components/ButtonSelectComponent';
 import { TodoDataManager } from '../../mock/TodoDataManager';
-import { FilterInfo } from '../../mock/TitleDataManager';
+import { FilterInfo, ExtInfo } from '../../mock/TitleDataManager';
 
 @Builder
 export function filterSelectBuilder(callbacks: SheetCallbacks) {
@@ -16,6 +16,7 @@ export function filterSelectBuilder(callbacks: SheetCallbacks) {
 struct FilterSelectComponent {
   statusManager: FilterInfo = FilterInfo.instance
   dataManager: TodoDataManager = TodoDataManager.instance
+  extInfo: ExtInfo = ExtInfo.instance
   @Param statusLabel: string[] = ['全部', '已完成', '已过期']
   @Param priorityLabel: string[] = ['全部', '无', '低优先级', '中优先级', '高优先级']
   @Param onConfirm: () => void = () => {
@@ -78,6 +79,28 @@ struct FilterSelectComponent {
             this.statusManager.priorityIndex = newIndex
           }
         })
+
+        // 甩出发送功能开关（在筛选菜单中也可访问）
+        Column() {
+          Row() {
+            Text('甩出发送')
+              .fontSize($r('sys.float.Body_L'))
+              .fontWeight(FontWeight.Medium)
+            
+            Blank()
+            
+            Toggle({ type: ToggleType.Switch, isOn: this.extInfo.isShareDragEnable })
+              .onChange((isOn: boolean) => {
+                this.extInfo.isShareDragEnable = isOn
+              })
+              .selectedColor($r('sys.color.multi_color_04'))
+          }
+          .width('100%')
+          .height(50)
+          .padding({ left: 16, right: 16 })
+        }
+        .width('100%')
+        .margin({ top: 16 })
       }
       .padding('5%')
       .alignItems(HorizontalAlign.Start)

@@ -166,7 +166,7 @@ export struct AddTodoTaskSheet {
         })
 
         if (this.showRemind) {
-          Divider().strokeWidth('1px')
+          Divider().strokeWidth(1)
           Row() {
             Text('提醒').fontSize($r('sys.float.Body_L')).fontWeight(FontWeight.Medium)
             Blank()
