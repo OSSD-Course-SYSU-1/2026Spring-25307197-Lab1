@@ -135,6 +135,14 @@
     {
       "name": "get_distributed_device_info_reason",
       "value": "用于获取分布式设备基础信息（设备名、类型、网络标识等）"
+    },
+    {
+      "name": "manage_missions_reason",
+      "value": "用于管理分布式任务流转，支持跨设备任务迁移和协同"
+    },
+    {
+      "name": "get_network_info_reason",
+      "value": "用于获取网络状态，支持分布式设备互联能力"
     }
   ]
 }

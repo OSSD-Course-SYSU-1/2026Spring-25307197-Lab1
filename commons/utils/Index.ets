@@ -25,3 +25,14 @@ export { NotificationBasicOptions } from './src/main/ets/model/NotificationOptio
 export { GlobalInfoModel, BreakpointTypeEnum } from './src/main/ets/model/GlobalInfoModel';
 
 export { BreakpointType } from './src/main/ets/utils/BreakpointSystem';
+
+// 分布式流转相关
+export { FlowTransferUtil, FlowDeviceInfo, FlowState, FlowType, PageStateCache, FlowTransferCallback, SelectedDateInfo, TodoListScrollInfo, CalendarDisplayData } from './src/main/ets/FlowTransferUtil';
+
+export { DeviceConnectivityManager, DeviceInfo, DeviceStateChange } from './src/main/ets/DeviceConnectivityManager';
+
+export { DistributedMissionManagerUtil, MissionChangeInfo, ContinueState } from './src/main/ets/DistributedMissionManager';
+
+export { DistributedTaskFlowManager } from './src/main/ets/DistributedTaskFlowExample';
+
+export { Logger } from './src/main/ets/Logger';

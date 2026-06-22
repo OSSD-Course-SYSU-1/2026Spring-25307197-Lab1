@@ -7,6 +7,14 @@ import { MinePage } from '@ohos_agcit/daily_schedule_mine';
 import { AvoidArea } from '@ohos_agcit/daily_schedule_component_lib';
 import { AppStorageV2, display } from '@kit.ArkUI';
 import { BreakpointSystem, BreakpointType, BreakpointConstants } from '../utils/BreakpointSystem';
+import { DeviceSelectDialog } from '../components/DeviceSelectDialog';
+import { DistributedTransferUtil, PageState, DeviceInfo } from '../utils/DistributedTransferUtil';
+import { promptAction } from '@kit.ArkUI';
+import { hilog } from '@kit.PerformanceAnalysisKit';
+import { common } from '@kit.AbilityKit';
+
+const DOMAIN = 0x0000;
+const TAG = 'MainEntry';
 
 @Entry
 @ComponentV2
@@ -23,10 +31,34 @@ struct MainEntry {
   @Local windowHeight: number = 640;
   // 当前断点类型
   @Local currentBreakpoint: BreakpointType = BreakpointType.SM;
+  // 设备选择弹窗控制器
+  private deviceDialogController: CustomDialogController | null = null;
+  // 分布式流转工具
+  private transferUtil: DistributedTransferUtil = DistributedTransferUtil.getInstance();
   
   aboutToAppear(): void {
     // 初始化窗口尺寸
     this.initWindowSize();
+    // 初始化分布式流转工具
+    this.initTransferUtil();
+  }
+  
+  aboutToDisappear(): void {
+    // 释放弹窗控制器
+    if (this.deviceDialogController) {
+      this.deviceDialogController = null;
+    }
+  }
+  
+  // 初始化分布式流转工具
+  private async initTransferUtil(): Promise<void> {
+    try {
+      const context = getContext(this) as common.UIAbilityContext;
+      await this.transferUtil.init(context);
+      hilog.info(DOMAIN, TAG, '分布式流转工具初始化成功');
+    } catch (err) {
+      hilog.error(DOMAIN, TAG, `初始化分布式流转工具失败: ${err}`);
+    }
   }
   
   // 初始化窗口尺寸
@@ -51,6 +83,59 @@ struct MainEntry {
   private get sidebarWidth(): number {
     return BreakpointSystem.getSidebarWidth(this.windowWidth);
   }
+  
+  // 显示设备选择弹窗
+  private showDeviceSelectDialog(): void {
+    this.deviceDialogController = new CustomDialogController({
+      builder: DeviceSelectDialog({
+        onDeviceSelected: (device: DeviceInfo) => {
+          this.handleDeviceSelected(device);
+        }
+      }),
+      autoCancel: true,
+      alignment: DialogAlignment.Center,
+      customStyle: true
+    });
+    this.deviceDialogController.open();
+  }
+  
+  // 处理设备选择
+  private async handleDeviceSelected(device: DeviceInfo): Promise<void> {
+    try {
+      hilog.info(DOMAIN, TAG, `选择设备: ${device.deviceName}`);
+      
+      // 缓存当前页面状态
+      const pageState: PageState = {
+        curIndex: this.vm.curIndex,
+        windowWidth: this.windowWidth,
+        windowHeight: this.windowHeight,
+        timestamp: Date.now()
+      };
+      
+      // 发起分布式任务流转
+      const success = await this.transferUtil.startMigration(device, pageState);
+      
+      if (success) {
+        promptAction.showToast({
+          message: `正在流转至 ${device.deviceName}`,
+          duration: 2000
+        });
+      } else {
+        // 引导用户使用超级终端面板
+        promptAction.showToast({
+          message: `已准备流转至 ${device.deviceName}，请从屏幕右上角下滑打开超级终端面板完成流转`,
+          duration: 4000
+        });
+      }
+      
+    } catch (err) {
+      hilog.error(DOMAIN, TAG, `处理设备选择失败: ${err}`);
+      promptAction.showToast({
+        message: '流转失败，请重试',
+        duration: 2000
+      });
+    }
+  }
 
   build() {
     Navigation(this.vm.navStack) {
@@ -69,6 +154,8 @@ struct MainEntry {
     .hideToolBar(true)
     .hideBackButton(true)
     .mode(NavigationMode.Stack)
+    // 添加右上角菜单
+    .menus(this.getNavigationMenus())
     // 安全区适配：避开刘海、挖孔、底部手势栏
     .expandSafeArea([SafeAreaType.SYSTEM], [SafeAreaEdge.TOP, SafeAreaEdge.BOTTOM])
     // 监听窗口尺寸变化，实现响应式布局切换
@@ -90,6 +177,19 @@ struct MainEntry {
         }
       }
     })
+  }
+  
+  // Navigation右上角菜单
+  private getNavigationMenus(): Array<NavigationMenuItem> {
+    return [
+      {
+        value: '流转至其他设备',
+        icon: $r('sys.symbol.phone'),
+        action: () => {
+          this.showDeviceSelectDialog();
+        }
+      }
+    ];
   }
 
   // 单列布局（底部 TabBar）

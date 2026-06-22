@@ -3,11 +3,12 @@ import { hilog } from '@kit.PerformanceAnalysisKit';
 import { AppStorageV2, window } from '@kit.ArkUI';
 import { BusinessError } from '@kit.BasicServicesKit';
 import { AvoidArea } from '@ohos_agcit/daily_schedule_component_lib';
-import { ThemeController, TodoDataReceiver, TodoAction, TodoItem, TodoDataFormat, DeviceManagerUtil, TransferUtil, transferUtil } from '@ohos_agcit/daily_schedule_common_lib';
+import { ThemeController, TodoDataReceiver, TodoAction, TodoItem, TodoDataFormat, DeviceManagerUtil, TransferUtil, transferUtil, ThemeManager } from '@ohos_agcit/daily_schedule_common_lib';
 import { WindowUtil } from '@ohos_agcit/daily_schedule_utils';
 import { TodoDataManager, TodoPersistenceWrapper } from '@ohos_agcit/daily_schedule_todo';
 import { distributedDeviceManager } from '@kit.DistributedServiceKit';
 import { distributedDataObject } from '@kit.ArkData';
+import { DistributedTransferUtil, PageState } from '../utils/DistributedTransferUtil';
 
 const DOMAIN = 0x0000;
 
@@ -47,11 +48,16 @@ export default class EntryAbility extends UIAbility {
   private deviceManager: distributedDeviceManager.DeviceManager | null = null;
   private todoDataObject: distributedDataObject.DataObject | null = null; // 分布式待办数据对象
   private dataReceiver: TodoDataReceiver = TodoDataReceiver.instance; // 数据接收管理器
+  private transferUtil: DistributedTransferUtil = DistributedTransferUtil.getInstance(); // 分布式流转工具
+  private storage: LocalStorage = new LocalStorage(); // 本地存储，用于恢复页面状态
 
   onCreate(_want: Want, _launchParam: AbilityConstant.LaunchParam): void {
     this.context.getApplicationContext().setColorMode(ConfigurationConstant.ColorMode.COLOR_MODE_NOT_SET);
     this.themeController.currentColorMode = this.context.config.colorMode;
     hilog.info(DOMAIN, 'testTag', '%{public}s', 'Ability onCreate');
+    
+    // 初始化主题管理器
+    ThemeManager.instance.init(this.context);
     
     // 初始化待办数据持久化
     TodoPersistenceWrapper.init(this.context);
@@ -64,6 +70,71 @@ export default class EntryAbility extends UIAbility {
     
     // 初始化分布式待办数据对象
     this.initDistributedTodoObject();
+    
+    // 初始化分布式流转工具
+    this.transferUtil.init(this.context);
+    
+    // 处理应用接续启动
+    if (_launchParam.launchReason === AbilityConstant.LaunchReason.CONTINUATION) {
+      hilog.info(DOMAIN, 'Continuation', '应用接续启动，恢复状态');
+      this.handleContinuation(_want);
+    }
+  }
+  
+  /**
+   * 应用接续 - 保存状态
+   */
+  onContinue(wantParam: Record<string, Object>): AbilityConstant.OnContinueResult {
+    hilog.info(DOMAIN, 'Continuation', 'onContinue called');
+    
+    try {
+      // 获取当前页面状态（从AppStorage或全局状态管理器中获取）
+      // 注意：AppStorageV2.connect 用于对象类型，基本类型使用 AppStorage.get
+      const curTabIndex = AppStorage.get<number>('curTabIndex') ?? 0;
+      const pageState: PageState = {
+        curIndex: curTabIndex,
+        windowWidth: 360,
+        windowHeight: 640,
+        timestamp: Date.now()
+      };
+      
+      // 将页面状态保存到wantParam中
+      wantParam['pageState'] = JSON.stringify(pageState);
+      
+      hilog.info(DOMAIN, 'Continuation', `保存页面状态: Tab索引=${pageState.curIndex}`);
+      
+      return AbilityConstant.OnContinueResult.AGREE;
+    } catch (err) {
+      const e = err as BusinessError;
+      hilog.error(DOMAIN, 'Continuation', `保存状态失败: ${e.message}`);
+      return AbilityConstant.OnContinueResult.REJECT;
+    }
+  }
+  
+  /**
+   * 处理应用接续 - 恢复状态
+   */
+  private handleContinuation(want: Want): void {
+    try {
+      if (want.parameters && want.parameters['pageState']) {
+        const pageStateJson = want.parameters['pageState'] as string;
+        const pageState = JSON.parse(pageStateJson) as PageState;
+        
+        hilog.info(DOMAIN, 'Continuation', 
+          `恢复页面状态: Tab索引=${pageState.curIndex}`);
+        
+        // 将恢复的状态保存到LocalStorage
+        this.storage.setOrCreate('curTabIndex', pageState.curIndex);
+        
+        // 设置迁移状态为ACTIVE，确保可以继续迁移
+        this.context.setMissionContinueState(AbilityConstant.ContinueState.ACTIVE, (result) => {
+          hilog.info(DOMAIN, 'Continuation', `设置迁移状态: ${JSON.stringify(result)}`);
+        });
+      }
+    } catch (err) {
+      const e = err as BusinessError;
+      hilog.error(DOMAIN, 'Continuation', `恢复状态失败: ${e.message}`);
+    }
   }
   
   /**
@@ -582,5 +653,28 @@ export default class EntryAbility extends UIAbility {
 
   onNewWant(_want: Want, _launchParam: AbilityConstant.LaunchParam): void {
     this.dataManager.updateAtomicCard();
+    
+    // 处理应用接续热启动
+    if (_launchParam.launchReason === AbilityConstant.LaunchReason.CONTINUATION) {
+      hilog.info(DOMAIN, 'Continuation', '应用接续热启动，恢复状态');
+      this.handleContinuation(_want);
+    }
+  }
+  
+  /**
+   * 应用接续 - 窗口恢复
+   */
+  onWindowStageRestore(windowStage: window.WindowStage): void {
+    hilog.info(DOMAIN, 'Continuation', 'onWindowStageRestore called');
+    
+    // 加载主页面
+    windowStage.loadContent('pages/MainEntry', (err: BusinessError) => {
+      if (err.code) {
+        hilog.error(DOMAIN, 'Continuation', 
+          `Failed to load content. Cause: ${JSON.stringify(err)}`);
+        return;
+      }
+      hilog.info(DOMAIN, 'Continuation', 'Succeeded in loading content for continuation');
+    });
   }
 }

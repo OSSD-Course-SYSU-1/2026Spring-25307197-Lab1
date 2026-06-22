@@ -23,6 +23,26 @@
           ],
           "when": "inuse"
         }
+      },
+      {
+        "name": "ohos.permission.MANAGE_MISSIONS",
+        "reason": "$string:manage_missions_reason",
+        "usedScene": {
+          "abilities": [
+            "EntryAbility"
+          ],
+          "when": "inuse"
+        }
+      },
+      {
+        "name": "ohos.permission.GET_NETWORK_INFO",
+        "reason": "$string:get_network_info_reason",
+        "usedScene": {
+          "abilities": [
+            "EntryAbility"
+          ],
+          "when": "inuse"
+        }
       }
     ],
     "abilities": [
@@ -35,6 +55,7 @@
         "startWindowIcon": "$media:foreground",
         "startWindowBackground": "$color:start_window_background",
         "exported": true,
+        "continuable": true,
         "skills": [
           {
             "entities": [

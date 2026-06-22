@@ -64,3 +64,12 @@ export {
   showToast,
   hideCurrentToast
 } from './src/main/ets/utils/ToastManager';
+// 主题管理器
+export {
+  ThemeManager,
+  ThemeType,
+  ThemeColors,
+  ThemeState
+} from './src/main/ets/utils/ThemeManager';
+// 主题选择器示例组件
+export { ThemeSelectorExample } from './src/main/ets/components/ThemeSelectorExample';
